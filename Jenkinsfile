@@ -151,7 +151,7 @@ def scan_type
                            """
                        }
                        else if(scan_type == "APIS"){
-			   apitarget = "${target}openapi"
+			   apitarget = "${target}/openapi"
                            sh """
                                docker exec owasp \
                                zap-api-scan.py \
