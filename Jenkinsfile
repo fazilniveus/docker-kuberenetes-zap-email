@@ -27,6 +27,11 @@ def scan_type
          	choice  choices: ["Baseline", "APIS", "Full"],
                  	description: 'Type of scan that is going to perform inside the container',
                  	name: 'SCAN_TYPE'
+		
+		string defaultValue: "",
+                 description: 'Target URL to scan',
+                 name: 'TARGET'
+ 
 		booleanParam defaultValue: true,
                  	description: 'Parameter to know if wanna generate report.',
                  	name: 'GENERATE_REPORT'
@@ -123,26 +128,10 @@ def scan_type
 	    stage('Scanning target on owasp container') {
              steps {
                  script {
-		     sh 'sleep 10'
-			sh 'gcloud container clusters get-credentials jenkins-jen-cluster --zone asia-south1-a --project tech-rnd-project'
-			sh 'kubectl get pods'	
-			sh 'kubectl get service myapp > intake.txt'
-			sh """
-			
-				awk '{print \$4}' intake.txt > extract.txt
-                        """
-			IP = sh (
-        			script: 'grep -Eo "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" extract.txt > finalout.txt && ip=$(cat finalout.txt) && aa="http://${ip}" && echo $aa',
-        			returnStdout: true
-    			).trim()
-    			echo "Git committer email: ${IP}"
-		 
-	      
-	    	     
-			 
+		     	 
                        scan_type = "${params.SCAN_TYPE}"
                        echo "----> scan_type: $scan_type"
-			 
+			target = "${params.TARGET}" 
 			
 		       
 			 
@@ -150,7 +139,7 @@ def scan_type
                            sh """
                                docker exec owasp \
                                zap-baseline.py \
-                               -t ${IP} \
+                               -t $target \
                                -r report.html \
                                -I
                            """
@@ -159,7 +148,7 @@ def scan_type
                            sh """
                                docker exec owasp \
                                zap-api-scan.py \
-                               -t ${IP}\
+                               -t $target\
 			       -f openapi
                                -r report.html \
                                -I
@@ -169,7 +158,7 @@ def scan_type
                            sh """
                                docker exec owasp \
                                zap-full-scan.py \
-                               -t ${IP}\
+                               -t $target \
 			       
                                //-x report.html
                                -I
