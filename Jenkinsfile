@@ -1,5 +1,5 @@
 def scan_type
- def host
+ def target
  def SendEmailNotification(String result) {
   
     // config 
