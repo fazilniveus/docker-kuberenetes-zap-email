@@ -142,10 +142,12 @@ def scan_type
                                -t $target \
                                -r report.html \
                                -I
+			       
+			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
 			    """
 			       SendEmailNotification("SUCCESSFUL")
 			   sh """
-			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
+			       
 			       docker stop owasp
 			       docker rm owasp
                            """
@@ -159,10 +161,12 @@ def scan_type
 			       -f openapi \
                                -r report.html \
                                -I
+			       
+			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
 			    """
 			       SendEmailNotification("SUCCESSFUL")
 			    sh """
-			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
+			       
 			       docker stop owasp
 			       docker rm owasp
                            """
@@ -175,11 +179,13 @@ def scan_type
 			       
                                //-x report.html
                                -I
+			       
+			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
 			    """
 			       SendEmailNotification("SUCCESSFUL")
 			    sh """
 			       
-			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
+			       
 			       docker stop owasp
 			       docker rm owasp
                             """
