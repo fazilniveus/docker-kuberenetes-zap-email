@@ -156,7 +156,7 @@ def scan_type
                                docker exec owasp \
                                zap-api-scan.py \
                                -t $target \
-			       -f openapi
+			       -f openapi \
                                -r report.html \
                                -I
 			    """
