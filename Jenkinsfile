@@ -131,7 +131,7 @@ def scan_type
 		     	 
                        scan_type = "${params.SCAN_TYPE}"
                        echo "----> scan_type: $scan_type"
-			target = "${params.TARGET}" 
+			target = "${params.TARGET}"
 			
 		       
 			 
@@ -154,7 +154,7 @@ def scan_type
                            sh """
                                docker exec owasp \
                                zap-api-scan.py \
-                               -t $target\
+                               -t $target \
 			       -f openapi
                                -r report.html \
                                -I
