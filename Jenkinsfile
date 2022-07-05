@@ -117,7 +117,7 @@ def scan_type
 			    docker run -dt --name owasp \
     			    owasp/zap2docker-stable \
     			    /bin/bash
-			    
+			   
 			    
 			    echo "Creating Workspace Inside Docker"
 			    docker exec owasp \
@@ -142,8 +142,9 @@ def scan_type
                                -t $target \
                                -r report.html \
                                -I
-			       
+			    """
 			       SendEmailNotification("SUCCESSFUL")
+			   sh """
 			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
 			       docker stop owasp
 			       docker rm owasp
@@ -157,8 +158,9 @@ def scan_type
 			       -f openapi
                                -r report.html \
                                -I
-			       
+			    """
 			       SendEmailNotification("SUCCESSFUL")
+			    sh """
 			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
 			       docker stop owasp
 			       docker rm owasp
@@ -172,8 +174,10 @@ def scan_type
 			       
                                //-x report.html
                                -I
-			       
+			    """
 			       SendEmailNotification("SUCCESSFUL")
+			    sh """
+			       
 			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
 			       docker stop owasp
 			       docker rm owasp
