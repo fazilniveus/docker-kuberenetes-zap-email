@@ -142,6 +142,11 @@ def scan_type
                                -t $target \
                                -r report.html \
                                -I
+			       
+			       SendEmailNotification("SUCCESSFUL")
+			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
+			       docker stop owasp
+			       docker rm owasp
                            """
                        }
                        else if(scan_type == "APIS"){
@@ -152,6 +157,11 @@ def scan_type
 			       -f openapi
                                -r report.html \
                                -I
+			       
+			       SendEmailNotification("SUCCESSFUL")
+			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
+			       docker stop owasp
+			       docker rm owasp
                            """
                        }
                        else if(scan_type == "Full"){
@@ -162,19 +172,17 @@ def scan_type
 			       
                                //-x report.html
                                -I
+			       
+			       SendEmailNotification("SUCCESSFUL")
+			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
+			       docker stop owasp
+			       docker rm owasp
                             """
                            //-x report-$(date +%d-%b-%Y).xml
                        }
                        else{
                            echo "Something went wrong..."
                        }
-			sh '''
-				docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
-				echo ${WORKSPACE}
-				docker stop owasp
-                     	docker rm owasp
-			'''
-			SendEmailNotification("SUCCESSFUL")
 				    
 		  }
 	     }
