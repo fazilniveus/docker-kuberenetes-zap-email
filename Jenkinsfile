@@ -167,8 +167,8 @@ def scan_type
 			       SendEmailNotification("SUCCESSFUL")
 			    sh """
 			       
-			       //docker stop owasp
-			       //docker rm owasp
+			       docker stop owasp
+			       docker rm owasp
                            """
                        }
                        else if(scan_type == "Full"){
