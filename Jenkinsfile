@@ -176,8 +176,7 @@ def scan_type
                                docker exec owasp \
                                zap-full-scan.py \
                                -t $target \
-			       
-                               //-x report.html
+                               -r report.html \
                                -I
 			       
 			       docker cp owasp:/zap/wrk/report.html ${WORKSPACE}/report.html
